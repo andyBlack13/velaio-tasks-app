@@ -1,0 +1,23 @@
+<mat-toolbar>
+    
+    <button mat-icon-button class="example-icon menu-collapse" [matMenuTriggerFor]="menu">
+        <mat-icon>menu</mat-icon>
+    </button>
+
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="navigateTo('/home')">Principal</button>
+        <button mat-menu-item (click)="navigateTo('/tasks')">Tareas</button>
+    </mat-menu>
+
+    <img class="logo" src="../assets/img/logo.png" alt="logo">
+
+    <div class="menu-expanded">
+        <button mat-button (click)="navigateTo('/home')">Principal</button>
+        <button mat-button (click)="navigateTo('/tasks')">Tareas</button>
+    </div>
+
+    <div class="avatar-div">
+        <img class="avatar" src="../assets/img/avatar.png" alt="avatar">
+    </div>
+
+</mat-toolbar>

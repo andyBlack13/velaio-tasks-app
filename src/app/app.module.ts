@@ -13,6 +13,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { MatCardModule } from '@angular/material/card';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
@@ -34,6 +39,11 @@ import {MatInputModule} from '@angular/material/input';
     MatInputModule,
     MatSelectModule,
     MatIconModule,
+    MatToolbarModule, 
+    MatButtonModule,
+    ToolbarComponent,
+    MatCardModule,
+    MatDatepickerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

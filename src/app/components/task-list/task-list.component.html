@@ -1,0 +1,148 @@
+<section>
+    <div class="title">
+        <h1>Lista de tareas</h1>
+        <button class="add-mobile" mat-fab (click)="redirect('/tasks/new')">
+            <mat-icon>add</mat-icon>
+        </button>
+        <button class="add-desktop" mat-fab extended (click)="redirect('/tasks/new')">
+            <mat-icon>add</mat-icon>
+            Crear Tarea
+        </button>
+    </div>
+</section>
+
+<section *ngIf="!isDesktop">
+    <div class="filters">
+        <h3>Filtros: </h3>
+        <mat-button-toggle-group (change)="applyFilter($event.value)">
+            <mat-button-toggle value="all">Todas</mat-button-toggle>
+            <mat-button-toggle value="completed">Completados</mat-button-toggle>
+            <mat-button-toggle value="pending">Pendientes</mat-button-toggle>
+        </mat-button-toggle-group>
+    </div>
+</section>
+
+<section *ngIf="!isDesktop">
+    <div class="task-grid">
+        <div class="task-item" *ngFor="let task of filteredTasks; index as i">
+            <mat-card style="height: auto" appearance="outlined">
+                <mat-card-header>
+                    <mat-checkbox
+                        [checked]="task.status && task.status == 'Pendiente' ? false : true" 
+                        (change)="toggleTaskCompletion(i, task.status && task.status == 'Pendiente' ? 'Completada' : 'Pendiente')"
+                        class="example-margin">
+                    </mat-checkbox>
+    
+                    <div class="title-card">
+                        <h2>{{ task.name }} - <span>{{ task.limit_date }}</span><span class="status" *ngIf="task.status"> ({{task.status}})</span></h2>
+                    </div>
+                </mat-card-header>
+                <mat-card-content>
+                    <h4>Personas asignadas:</h4>
+                    <ul>
+                        <li *ngFor="let person of task.persons">
+                            <span class="fullname-person">{{ person.fullname }}</span> (Edad: {{ person.age }})
+                            <br>Habilidades: <span class="ability" *ngFor="let skill of person.skills">{{ skill.name }} </span>
+                        </li>
+                    </ul>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</section>
+
+<section *ngIf="isDesktop">
+    <div class="task-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Pendiente</th>
+                    <th>En proceso</th>
+                    <th>Completado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="task-item" *ngFor="let task of filteredTasks; index as i">
+                            <mat-card *ngIf="task.status == 'Pendiente'" style="height: auto" appearance="outlined">
+                                <mat-card-header>
+                                    <mat-checkbox
+                                        [checked]="task.status && task.status == 'Pendiente' ? false : true" 
+                                        (change)="toggleTaskCompletion(i, task.status && task.status == 'Pendiente' ? 'Completada' : 'Pendiente')"
+                                        class="example-margin">
+                                    </mat-checkbox>
+                    
+                                    <div class="title-card">
+                                        <h2>{{ task.name }} - <span>{{ task.limit_date }}</span><span class="status" *ngIf="task.status"> ({{task.status}})</span></h2>
+                                    </div>
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <h4>Personas asignadas:</h4>
+                                    <ul>
+                                        <li *ngFor="let person of task.persons">
+                                            <span class="fullname-person">{{ person.fullname }}</span> (Edad: {{ person.age }})
+                                            <br>Habilidades: <span class="ability" *ngFor="let skill of person.skills">{{ skill.name }} </span>
+                                        </li>
+                                    </ul>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="task-item" *ngFor="let task of filteredTasks; index as i">
+                            <mat-card *ngIf="task.status != 'Pendiente' && task.status != 'Completado'" style="height: auto" appearance="outlined">
+                                <mat-card-header>
+                                    <mat-checkbox
+                                        [checked]="task.status && task.status == 'Pendiente' ? false : true" 
+                                        (change)="toggleTaskCompletion(i, task.status && task.status == 'Pendiente' ? 'Completada' : 'Pendiente')"
+                                        class="example-margin">
+                                    </mat-checkbox>
+                    
+                                    <div class="title-card">
+                                        <h2>{{ task.name }} - <span>{{ task.limit_date }}</span><span class="status" *ngIf="task.status"> ({{task.status}})</span></h2>
+                                    </div>
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <h4>Personas asignadas:</h4>
+                                    <ul>
+                                        <li *ngFor="let person of task.persons">
+                                            <span class="fullname-person">{{ person.fullname }}</span> (Edad: {{ person.age }})
+                                            <br>Habilidades: <span class="ability" *ngFor="let skill of person.skills">{{ skill.name }} </span>
+                                        </li>
+                                    </ul>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="task-item" *ngFor="let task of filteredTasks; index as i">
+                            <mat-card *ngIf="task.status == 'Completado'" style="height: auto" appearance="outlined">
+                                <mat-card-header>
+                                    <mat-checkbox
+                                        [checked]="true" 
+                                        (change)="toggleTaskCompletion(i, task.status && task.status != 'Completado' ? 'Completada' : 'Pendiente')"
+                                        class="example-margin">
+                                    </mat-checkbox>
+                    
+                                    <div class="title-card">
+                                        <h2>{{ task.name }} - <span>{{ task.limit_date }}</span><span class="status" *ngIf="task.status"> ({{task.status}})</span></h2>
+                                    </div>
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <h4>Personas asignadas:</h4>
+                                    <ul>
+                                        <li *ngFor="let person of task.persons">
+                                            <span class="fullname-person">{{ person.fullname }}</span> (Edad: {{ person.age }})
+                                            <br>Habilidades: <span class="ability" *ngFor="let skill of person.skills">{{ skill.name }} </span>
+                                        </li>
+                                    </ul>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
